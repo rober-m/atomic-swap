@@ -1,0 +1,22 @@
+# Build artifacts
+/target/
+build/
+dist/
+# Generated code (e.g. blueprint bundled into the off-chain library)
+*.generated.ts
+
+# Dependencies
+node_modules/
+
+# Environment
+.env.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

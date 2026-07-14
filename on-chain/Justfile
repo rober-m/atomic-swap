@@ -1,0 +1,13 @@
+# On-chain component (Aiken)
+# Part of atomic-swap
+
+build:
+    aiken build
+    cp -f plutus.json ../blueprint/plutus.json
+
+test:
+    aiken check
+
+clean:
+    rm -rf build/
+    rm -f plutus.json

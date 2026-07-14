@@ -1,0 +1,137 @@
+{
+  "preamble": {
+    "title": "atomic-swap/on-chain",
+    "description": "On-chain validators for atomic-swap",
+    "version": "0.0.0",
+    "plutusVersion": "v3",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.1.22+39d6b04"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "swap.swap.spend",
+      "datum": {
+        "title": "datum",
+        "schema": {
+          "$ref": "#/definitions/swap~1SwapDatum"
+        }
+      },
+      "redeemer": {
+        "title": "redeemer",
+        "schema": {
+          "$ref": "#/definitions/swap~1SwapAction"
+        }
+      },
+      "compiledCode": "5902b501010029800aba4aba2aba1aba0aab9faab9eaab9dab9a4888888896600264653001300800198041804800cc0200092225980099b8748008c01cdd500144c8cc8a60022b30013001300a375400513232332259800980298071baa00a899192cc004c054006264b30013259800980498091baa001899b8f375c602c60266ea80040162941011180a98091baa301530123754003132330010013758602c00e44b30010018a518acc004c8cdc49bad30063015375400265300137566002602c6ea80166eb8c004c058dd50014520009bae3019301637540049111199119800800801191919800800803112cc004006007132325980099b910060018acc004cdc7803000c4dd5980f801401501d44cc010010c08c00d01d1bae301d00130200014078297adef6c602259800800c01226464b30013372200e00315980099b8f00700189bad301e00280320388998020021811001a038375c6038002603e00280e8460326034002602e00313300200230180018a50404880aa2941010180a000c5901219198008009bac30023011375401444b30010018a5eb8226644b3001325980099b8748010c050dd5000c4cc8966002005001800c00600313371e6eb800802901c180c180a9baa00114a114a08098c014c050dd500144cc058008cc0100100062660080080028090c054004c05800501311809980a180a000c4c8cc004004dd61809980a180a180a180a180a180a180a180a18081baa0092259800800c528456600266e3cdd7180a000801c528c4cc008008c05400500f202440346eb8c040c044004dd71808001180800098059baa300e300b3754005164025300a375400d300e003488966002600800515980098071baa009801c5900f456600266e1d20020028acc004c038dd5004c00e2c807a2c806100c0c030c034004dc3a400060106ea800a2c8030601000260066ea802629344d95900101",
+      "hash": "a25f4ca506c3ca2a9c278f0175138a8fcc39120000a3778f11c2729d"
+    },
+    {
+      "title": "swap.swap.else",
+      "redeemer": {
+        "schema": {}
+      },
+      "compiledCode": "5902b501010029800aba4aba2aba1aba0aab9faab9eaab9dab9a4888888896600264653001300800198041804800cc0200092225980099b8748008c01cdd500144c8cc8a60022b30013001300a375400513232332259800980298071baa00a899192cc004c054006264b30013259800980498091baa001899b8f375c602c60266ea80040162941011180a98091baa301530123754003132330010013758602c00e44b30010018a518acc004c8cdc49bad30063015375400265300137566002602c6ea80166eb8c004c058dd50014520009bae3019301637540049111199119800800801191919800800803112cc004006007132325980099b910060018acc004cdc7803000c4dd5980f801401501d44cc010010c08c00d01d1bae301d00130200014078297adef6c602259800800c01226464b30013372200e00315980099b8f00700189bad301e00280320388998020021811001a038375c6038002603e00280e8460326034002602e00313300200230180018a50404880aa2941010180a000c5901219198008009bac30023011375401444b30010018a5eb8226644b3001325980099b8748010c050dd5000c4cc8966002005001800c00600313371e6eb800802901c180c180a9baa00114a114a08098c014c050dd500144cc058008cc0100100062660080080028090c054004c05800501311809980a180a000c4c8cc004004dd61809980a180a180a180a180a180a180a180a18081baa0092259800800c528456600266e3cdd7180a000801c528c4cc008008c05400500f202440346eb8c040c044004dd71808001180800098059baa300e300b3754005164025300a375400d300e003488966002600800515980098071baa009801c5900f456600266e1d20020028acc004c038dd5004c00e2c807a2c806100c0c030c034004dc3a400060106ea800a2c8030601000260066ea802629344d95900101",
+      "hash": "a25f4ca506c3ca2a9c278f0175138a8fcc39120000a3778f11c2729d"
+    }
+  ],
+  "definitions": {
+    "ByteArray": {
+      "dataType": "bytes"
+    },
+    "Int": {
+      "dataType": "integer"
+    },
+    "List<swap/PricedAsset>": {
+      "dataType": "list",
+      "items": {
+        "$ref": "#/definitions/swap~1PricedAsset"
+      }
+    },
+    "aiken/crypto/VerificationKeyHash": {
+      "title": "VerificationKeyHash",
+      "dataType": "bytes"
+    },
+    "cardano/assets/AssetName": {
+      "title": "AssetName",
+      "dataType": "bytes"
+    },
+    "cardano/assets/PolicyId": {
+      "title": "PolicyId",
+      "dataType": "bytes"
+    },
+    "swap/PricedAsset": {
+      "title": "PricedAsset",
+      "description": "A single asset the owner is asking for. Ada is represented with an empty\n policy id and empty asset name (see `assets.ada_policy_id`).",
+      "anyOf": [
+        {
+          "title": "PricedAsset",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "policy",
+              "$ref": "#/definitions/cardano~1assets~1PolicyId"
+            },
+            {
+              "title": "name",
+              "$ref": "#/definitions/cardano~1assets~1AssetName"
+            },
+            {
+              "title": "quantity",
+              "$ref": "#/definitions/Int"
+            }
+          ]
+        }
+      ]
+    },
+    "swap/SwapAction": {
+      "title": "SwapAction",
+      "description": "Spending redeemer: either swap (anyone pays the price) or cancel (owner\n reclaims).",
+      "anyOf": [
+        {
+          "title": "Swap",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        },
+        {
+          "title": "Cancel",
+          "dataType": "constructor",
+          "index": 1,
+          "fields": []
+        }
+      ]
+    },
+    "swap/SwapDatum": {
+      "title": "SwapDatum",
+      "description": "Inline datum attached to the locked UTxO. Set by Person A when locking.",
+      "anyOf": [
+        {
+          "title": "SwapDatum",
+          "dataType": "constructor",
+          "index": 0,
+          "fields": [
+            {
+              "title": "owner",
+              "description": "Payment key hash of the person who must be paid (Person A).",
+              "$ref": "#/definitions/aiken~1crypto~1VerificationKeyHash"
+            },
+            {
+              "title": "price",
+              "description": "The minimum assets that must be paid to `owner` to take the locked value.",
+              "$ref": "#/definitions/List<swap~1PricedAsset>"
+            },
+            {
+              "title": "tag",
+              "description": "A unique tag identifying this swap. The payment must carry this exact\n tag as its inline datum, which binds the payment to this specific swap and\n prevents one payment output from satisfying several swaps at once (the\n \"double satisfaction\" attack). Person A must pick a value unique across\n their live swaps. Deriving it from the seed UTxO's output reference (which\n is globally unique) is the natural choice.",
+              "$ref": "#/definitions/ByteArray"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

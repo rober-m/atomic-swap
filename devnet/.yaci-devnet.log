@@ -1,0 +1,226 @@
+Killing existing yaci-cli process and its subprocesses with PID: 1446002
+yaci-cli process started with PID: 1448916
+
+,--.   ,--.            ,--.         ,-----.,--.   ,--.
+ \  `.'  /,--,--. ,---.`--'        '  .--./|  |   |  |
+  '.    /' ,-.  || .--',--.        |  |    |  |   |  |
+    |  | \ '-'  |\ `--.|  |        '  '--'\|  '--.|  |
+    `--'  `--`--' `---'`--'         `-----'`-----'`--'
+          [0;103m [1;95m A BloxBean Project - 0.10.6 (commit: a065faa) [0m
+
+2026-07-14 17:02:29,708 1448916 [           main] WARN  org.jline                                - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+[0;93m💡 [0mcardano-node already exists in /home/roberm/.yaci-cli/cardano-node/bin/cardano-node
+[0;93m💡 [0mUse --overwrite to overwrite the existing cardano-node
+[0;93m💡 [0myaci-store already exists in /home/roberm/.yaci-cli/components/store/yaci-store
+[0;93m💡 [0mUse --overwrite to overwrite the existing yaci-store
+[0;93m💡 [0mogmios already exists in /home/roberm/.yaci-cli/components/ogmios/bin/ogmios
+[0;93m💡 [0mUse --overwrite to overwrite the existing ogmios
+[0;93m💡 [0mDeleted pid file : node.pid
+[0;93m💡 [0mDeleted pid file : submit-api.pid
+[0;93m💡 [0mDeleted pid file : ogmios.pid
+[0;93m💡 [0mDeleted pid file : yaci-store.pid
+[0;34m✅ [0mDelete existing folder
+[0;34m✅ [0mCreate cluster folder !!!
+[0;93m💡 [0mSecurity parameter : 300
+[0;35m❗ [0mStability window is greater than epoch length. Stability window : 900, Epoch length : 600
+[0;35m❗ [0mYou may want to adjust the security parameter to make sure stability window is less than epoch length. 
+The features like rewards calculation which depends on stability window may not work as expected
+If you are using default configuration, you can ignore this warning. The transaction processing will work fine
+[0;34m✅ [0mSlot length updated in genesis.json
+[0;34m✅ [0mUpdated configuration.yaml
+[0;34m✅ [0mCopied default keys
+[0;34m✅ [0mUpdate ports
+[0;34m✅ [0mCreate Cluster : default
+
+[0;93m[💡 Admin Port] [0m10000
+[1;36m###### Node Details ######[0m
+[0;93m[💡 Node port] [0m3001
+[0;93m[💡 Node Socket Paths] [0m
+/home/roberm/.yaci-cli/local-clusters/default/node/node.sock
+[0;93m[💡 Submit Api Port] [0m8090
+[0;93m[💡 Protocol Magic] [0m42
+[0;93m[💡 Block Time] [0m1.0 sec
+[0;93m[💡 Slot Length] [0m1.0 sec
+[0;93m[💡 Start Time] [0m0
+[0;93m[💡 Epoch Length] [0m600
+[0;93m[💡 Security Param] [0m300
+[0;93m[💡 SlotsPerKESPeriod] [0m129600
+[0;34m✅ [0mUpdating Start time to current time - 600 in byron-genesis.json
+[0;34m✅ [0mUpdated Start time
+[0;34m✅ [0mStarting node from directory : /home/roberm/.yaci-cli/local-clusters/default/node
+[0;34m✅ [0mStarted submit api : http://localhost:8090
+[0;93m💡 [0mSwagger Url to interact with the cluster's node : http://localhost:10000/swagger-ui.html
+
+#################################
+[1;36mDefault Addresses[0m
+#################################
+
+[1;34mMnemonic: [0mtest test test test test test test test test test test test test test test test test test test test test test test sauce
+
+[1;36mAddress #0[0m          : addr_test1qryvgass5dsrf2kxl3vgfz76uhp83kv5lagzcp29tcana68ca5aqa6swlq6llfamln09tal7n5kvt4275ckwedpt4v7q48uhex
+[1;36mDerivation Path[0m     : m/1852'/1815'/0'/0/0
+[1;36mStake Address[0m       : stake_test1uruw6wswag80sd0l57alehj47llf6tx96402vt8vks46k0q0e2ne6
+[1;36mPayment Key[0m         : ed25519e_sk1sqr5ymxr5377q2tww7qzj8wdf9uwsx530p6txpfktvdsjvh2t3dk3q27c7gkel6anmfy4a2g6txy0f4mquwmj3pppvy3046006ulussa20jpu
+[1;36mStaking Key[0m         : ed25519e_sk12rgp4ssmuwe6tgsqwhf255dyj99vwfezsltnx2zg9ptwxvl2t3dumf06jg0rgyw0evktn24y9kshw8jtch3d6h2ppswtswywaa633vq34g6r4
+[1;36mUtxo[0m                : 6d36c0e2f304a5c27b85b3f04e95fc015566d35aef5f061c17c70e3e8b9ee508#0 - 10000 Ada
+
+[1;36mAddress #1[0m          : addr_test1qpqy3lufef8c3en9nrnzp2svwy5vy9zangvp46dy4qw23clgfxhn3pqv243d6wptud7fuaj5tjqer7wc7m036gx0emsqaqa8te
+[1;36mDerivation Path[0m     : m/1852'/1815'/1'/0/0
+[1;36mStake Address[0m       : stake_test1ur5yntecssx92cka8q47xly7we29eqv3l8v0dhcayr8uacq9umras
+[1;36mPayment Key[0m         : ed25519e_sk1sz7phkd0edt8rwydm5eyr2j5yytg6yuuakz9azvwxjhju0l2t3djjk0lsq376exusamclxnu2lkp3qmajuyyrtp4n5k7xeaeyjl52jq8r4xyr
+[1;36mStaking Key[0m         : ed25519e_sk10p46hyz6h34lr5d6l0x89hrlhenj7lf9cha7ln8a6697jwh2t3dhgkz0lcr896rv773mupcc239vcs06uet0a44yqsrzdlx69wwy8tswkp56t
+[1;36mUtxo[0m                : dc0d0d0a13e683e443c575147ec12136e5ac6a4f994cd4189d4d25bed541c44d#0 - 10000 Ada
+
+[1;36mAddress #2[0m          : addr_test1qr9xuxclxgx4gw3y4h4tcz4yvfmrt3e5nd3elphhf00a67xnrv5vjcv6tzehj2nnjj4cth4ndzyuf4asvvkgzeac2hfqk0za93
+[1;36mDerivation Path[0m     : m/1852'/1815'/2'/0/0
+[1;36mStake Address[0m       : stake_test1urf3k2xfvxd93vme9feef2u9m6ek3zwy67cxxtypv7u9t5s732n89
+[1;36mPayment Key[0m         : ed25519e_sk1gqv3vkxkcg0pwqm6v9uw7g79z7mm8cn4j5xxwms60cuuuw82t3dcjn8pzsc26wn5sl93mzk3hex8uy4syf9e6xhqxp67cyz3mnka4uc0r9as0
+[1;36mStaking Key[0m         : ed25519e_sk12qd8w9g5342kp8wpv8h3d53c40j8sgmge82m49kdlrhw5s82t3d5y4xwr4rdxyxj66heh7c7788npmvnlexqd7a6dxvz6amq4hxz2sgteyf6g
+[1;36mUtxo[0m                : aae852d5d2b08c0a937a319fec0d9933bc3bc67b9d0a6bfd4001997b169364b3#0 - 10000 Ada
+
+[1;36mAddress #3[0m          : addr_test1qqra0q073cecs03hr724psh3ppejrlpjuphgpdj7xjwvkqnhqttgsr5xuaaq2g805dldu3gq9gw7gwmgdyhpwkm59ensgyph06
+[1;36mDerivation Path[0m     : m/1852'/1815'/3'/0/0
+[1;36mStake Address[0m       : stake_test1upms945gp6rww7s9yrh6xlk7g5qz580y8d5xjtshtd6zuec2vgc38
+[1;36mPayment Key[0m         : ed25519e_sk1spvy8qz8fdnqadfpvvkyyxt7gacxql644vf2dluj8lees0h2t3dean3h530f97ek3l4prclpy6qxcutzupym6rv9nxmwr733ea8j4gcl3haeh
+[1;36mStaking Key[0m         : ed25519e_sk15zd6l7z66zhmuxlw9mgt4wg9wqrx0lt058whnvsz9yqe2w02t3dh423fmrmtt4ru0d2yvudk993x8v0x6j308ev89w9prgp3cu7q60s40s8h4
+[1;36mUtxo[0m                : 145da89c02380f6f72d6acc8194cd9295eb2001c2d88f0b20fef647ec5a18f7f#0 - 10000 Ada
+
+[1;36mAddress #4[0m          : addr_test1qp38kfvcm4c39yt8sfgkp3tyqe736fz708xzxuy5s9w9ev43yh3sash5eeq9ngrfuzxrekpvmly52xlmyfy8lz39emhs2spswl
+[1;36mDerivation Path[0m     : m/1852'/1815'/4'/0/0
+[1;36mStake Address[0m       : stake_test1uzcjtccwct6vusze5p57prpumqkdlj29r0ajyjrl3gjuamcwlpftq
+[1;36mPayment Key[0m         : ed25519e_sk1yzsz6qsaxxvj4m4qny937gs2v56v0sfqam90nmgfefhrv002t3d5h0vr5xvr56hrlhy0ganpg4qkwq2khxq6809r62uqtdlc7eya9wgwtf9aq
+[1;36mStaking Key[0m         : ed25519e_sk1rzz79a3g5dftz5dvl83j6v5n6mnpxmneemwcaek38cu9gw82t3dejlazt53amypxkly076u3xl60042wtu8h2t9uq6qrz4e3gvwx29qwc0y4g
+[1;36mUtxo[0m                : 8cc2f88405991a5dfb8cb6962fe44f56510d93405cfe9ea23baf1f6bf29f3011#0 - 10000 Ada
+
+[1;36mAddress #5[0m          : addr_test1qrrv7774puml0exvzc0uqrc8axezy6a925kv4ucdx906qy6mhjxtmx44x70ndr7g6dgqcdaf69q8fnrdmtvfud5x7rsqvsuqx5
+[1;36mDerivation Path[0m     : m/1852'/1815'/5'/0/0
+[1;36mStake Address[0m       : stake_test1updmer9an26n08ek3lydx5qvx75azsr5e3ka4ky7x6r0pcqyma95f
+[1;36mPayment Key[0m         : ed25519e_sk1mqgzsggq4y8z3s9ap0zta7y4xfcfm2pxf5ya3hwacvmlwd82t3deduqhheynwp04a2cvhtvre658w0cnx2cac49ujm5k4jl6mnhkq6gyl35nx
+[1;36mStaking Key[0m         : ed25519e_sk1hrfx6l6xjxvyzth02704fz6csk7np94mvdfpl8dmgfvkkth2t3de6c55j4d8z5a9f8fly3d3c4ccvh4zawh07s7udxa03j63vv6nwaq0uk0m3
+[1;36mUtxo[0m                : 27bc6c090c20dc1fe66f07ac200d5e97493a11c9554f3fc92f0ea7036fb11df9#0 - 10000 Ada
+
+[1;36mAddress #6[0m          : addr_test1qpgkf2ccvu2uscmcqgy4dkyjeae0va3kk7yk04nuleekq3u3xrwgnnm6n0yfzz0e8x2kkehex2f6mexrjg9h9l2qhm4qkms53s
+[1;36mDerivation Path[0m     : m/1852'/1815'/6'/0/0
+[1;36mStake Address[0m       : stake_test1uzgnphyfeaafhjy3p8unn9ttvmun9yadunpeyzmjl4qta6sq7le4m
+[1;36mPayment Key[0m         : ed25519e_sk19qu94cfggqdafymq8znpv5xkrj0ggssmlvsytpcev2ldy002t3d3qzxt9468nxszkhmpvehg54hql4sm2lenym5rsqf6hrl37kg0ksg3qmlew
+[1;36mStaking Key[0m         : ed25519e_sk14pfa52uet4ce6krepxncnazkq2zngygr4dth7tzuzkahz002t3dhttequn5f8s0s6knjm343kc94htnmlvwpza4vpjg0jdr9sa36a5q6a5ymg
+[1;36mUtxo[0m                : 5b5b9626afd8846240e3c05de23634b1b6e76620be69b5a249670071b3c3fb60#0 - 10000 Ada
+
+[1;36mAddress #7[0m          : addr_test1qq7a8p6zaxzgcmcjcy7ak8u5vn7qec9mjggzw6qg096nzlj6n7rflnv3x43vnv8q7q0h0ef4n6ncp5mljd2ljupwl79s5mqneq
+[1;36mDerivation Path[0m     : m/1852'/1815'/7'/0/0
+[1;36mStake Address[0m       : stake_test1updflp5lekgn2ckfkrs0q8mhu56eafuq6dlex40ewqh0lzcurksaw
+[1;36mPayment Key[0m         : ed25519e_sk1rz764r3hr8sckhrcydztu7rsav6uqc7d7xutnxr4vh826wl2t3de27ukls5d0qjzj3plu5q75xuhyje8whw7cq7drj6sl9ms6pgs5vc384ywj
+[1;36mStaking Key[0m         : ed25519e_sk1qztf2xzznhy76gunnt0lzptnjhzheth64gau0h496jzfgdh2t3dac0wr5yp5n42kz4jv4264a82kg73t3fqpp34eq284rvvdjgz0x2gquaghd
+[1;36mUtxo[0m                : 979a06c4cc5a1902d68f469d6d6e9a780a2667f5ce8557c199fcfa882e05c92e#0 - 10000 Ada
+
+[1;36mAddress #8[0m          : addr_test1qzyw0ensk3w2kgezk5vw77m0vmfs4mqdjg7ugclyvuy357g0vaukh8a8zgj09prvaw70f9gvz8sypmsjf5c0dctyhn2slcvsjn
+[1;36mDerivation Path[0m     : m/1852'/1815'/8'/0/0
+[1;36mStake Address[0m       : stake_test1uq8kw7ttn7n3yf8js3kwh085j5xprczqacfy6v8ku9jte4g4p9737
+[1;36mPayment Key[0m         : ed25519e_sk1mrq79v0seg8lnu9et3txtgr8f6me33knx5m7qfmje6yxjd82t3dkyt6jwnwfg35npnwurulp5rvk9dzw9hlrh4xsrc4a5gnege0k0qg3ftl8s
+[1;36mStaking Key[0m         : ed25519e_sk1gq2tajwd8t9whhuyxr8kzfklpesfvsyllcdt8n08nrxqgdl2t3d3apuulmctwv7pup8d52c7jmhzsf8xj00v832wcp4fqzewevvzz6gr4w02k
+[1;36mUtxo[0m                : a2857a9eb8e140c6183137bf8aadbb47eeea23b96b9f4a13e4155c1ef83716a6#0 - 10000 Ada
+
+[1;36mAddress #9[0m          : addr_test1qrrshpppv9uq95lj89tv4vv40cwnqmx5szzcndqhvr5hjfltl4s98wsjkwpg3v4k6h2vgcvdd2xwt82stq8fcmmsft6s8dzp8f
+[1;36mDerivation Path[0m     : m/1852'/1815'/9'/0/0
+[1;36mStake Address[0m       : stake_test1ur4l6cznhgft8q5gk2mdt4xyvxxk4r89n4g9sr5udacy4agpu0rzh
+[1;36mPayment Key[0m         : ed25519e_sk1xqleykm4zyggadyt6hunm6laqgd6yatcumyptvu8v8uf5wh2t3djrry8d3dlz2cve6hsc8a7vvuqqdud0h7vvyuhhmc0j0mw6pkaawcgh2ycr
+[1;36mStaking Key[0m         : ed25519e_sk1uqzvs53kr2jv6cfzwj0usczr3v8dqg32ydjf5h0fqlxd7d02t3dm5rhrz57j80gz5v3zzvlch9f6su9rnkhqm6d6tlgmy9lx6y72mtcu79lzk
+[1;36mUtxo[0m                : 6793565c7c64e2a979137e7876b2c560c194a0a6372b15f1473b72e64f4e1ab8#0 - 10000 Ada
+
+[1;36mAddress #10[0m         : addr_test1qrqfxwuz8rm0xvewfrp5eudgup24jsan8n22h3f6a7mavyjt0njqm4ykhhqzkdrq9ua8w0lhen8wsuuerexgsehn5u9syjlrxr
+[1;36mDerivation Path[0m     : m/1852'/1815'/10'/0/0
+[1;36mStake Address[0m       : stake_test1up9heeqd6jttmsptx3sz7wnh8lmuenhgwwv3unygvme6wzcsw9hpp
+[1;36mPayment Key[0m         : ed25519e_sk1nped0y8f849sgz5tgw307uj2a3l084r3qvjmqsynn9dxz0h2t3da6e0z5h0c26nc9c6k46kdcjxjq89c5nugfd7sj2vn989le92csdqzdhldz
+[1;36mStaking Key[0m         : ed25519e_sk1xqmy9ycnz02pngjhck4f6ussy4jnzd96f5zl0hl2qn9ykwl2t3dsrhvteyqpxw4cd0w8rs7z6rhj2dpwtmwjha6wgkr6knhtvkzyvkswm987q
+[1;36mUtxo[0m                : 08419f77fa20aec0a8b66047d0040be1c5446b2ddbe88e656dc62390260a997c#0 - 10000 Ada
+
+[1;36mAddress #11[0m         : addr_test1qp5l04egnh30q8x3uqn943d7jsa5za66htsvu6e74s8dacxwnjkm0n0v900d8mu20wlrx55xn07p8pm4fj0wdvtc9kwq7pztl7
+[1;36mDerivation Path[0m     : m/1852'/1815'/11'/0/0
+[1;36mStake Address[0m       : stake_test1ur8fetdhehkzhhkna798h03n22rfhlqnsa65e8hxk9uzm8qv0yvjv
+[1;36mPayment Key[0m         : ed25519e_sk19zen3lj20xr60c298p0jvpzgnd78vzj7hp796c4mtt3w2dl2t3dkyvhzdt4ugcjwqs8ndc869gzqrygsgaf33p5taxh75ka53ef6drgf6kvw5
+[1;36mStaking Key[0m         : ed25519e_sk1srj45s76tllvekvazx2cdm236tm487prg740r8y4s663ywl2t3d43jxpyv6y8ul9xuzpunryumcqkzutkfsuhes2ypefn5k8njnm2vstmhefx
+[1;36mUtxo[0m                : 592b36fd2dff5c8ff8c7125b9dd7ac027de661d55b2fc9ea4ef5b22b53cffda7#0 - 10000 Ada
+
+[1;36mAddress #12[0m         : addr_test1qpcf5ursqpwx2tp8maeah00rxxdfpvf8h65k4hk3chac0fvu28duly863yqhgjtl8an2pkksd6mlzv0qv4nejh5u2zjsshr90k
+[1;36mDerivation Path[0m     : m/1852'/1815'/12'/0/0
+[1;36mStake Address[0m       : stake_test1uzw9rk70jragjqt5f9ln7e4qmtgxadl3x8sx2euet6w9pfgnc2aa9
+[1;36mPayment Key[0m         : ed25519e_sk1dpv5hvnymhtyx79h55z0wz2pttk0tf6dwz67xu83uhukcd82t3d5tx2sr9uvl3a9cfjsw9t7jlt8m2ln0qaezdq6ax7myhj8828m5egd00rt8
+[1;36mStaking Key[0m         : ed25519e_sk16z67pkc7mal30ewl09z5qt4chltu3sa5tks2tkwtffdkzw02t3dk8qxkll9h9064c544g27693sqgsvvl0exesuvalrc8p9lav8lyzs869c0y
+[1;36mUtxo[0m                : ce5179fbf81eb92907e8e5ca7d2180b561871c87c4136a2deaf9dd75f34b51be#0 - 10000 Ada
+
+[1;36mAddress #13[0m         : addr_test1qr79wm0n5fucskn6f58u2qph9k4pm9hjd3nkx4pwe54ds4gh2vpy4h4r0sf5ah4mdrwqe7hdtfcqn6pstlslakxsengsgyx75q
+[1;36mDerivation Path[0m     : m/1852'/1815'/13'/0/0
+[1;36mStake Address[0m       : stake_test1uqt4xqj2m63hcy6wm6ak3hqvltk45uqfaqc9lc07mrgve5g0snxf6
+[1;36mPayment Key[0m         : ed25519e_sk1vpkzkcn40jqvjjvqgexe5vrkr2ywhucfx7lj7yuvr2puk002t3ds0w3u9dhrvth5eql56u2c6zww5eg2568vj986lzhs0r5sttv4v7g04c2ru
+[1;36mStaking Key[0m         : ed25519e_sk1crlzxz9ve605cle3pt4jadsp68yln29adxg6ntxy3pepqs82t3djl96cmfd5kw2s3e3evre72cjqfhqh76lkeuqt94xa0fmf6e3exfs5fpw9w
+[1;36mUtxo[0m                : d9d325322d157b007eb936bbd54968844e6e0f845994ad1843874d82a1521832#0 - 10000 Ada
+
+[1;36mAddress #14[0m         : addr_test1qqe5df3su6tjhuuve6rjr8d36ccxre7dxfx2mzxp3egy72vsetrga9el2yjke2fcdql6f6sjzu7h6prajs8mhzpm6r5qpkfq9m
+[1;36mDerivation Path[0m     : m/1852'/1815'/14'/0/0
+[1;36mStake Address[0m       : stake_test1uzgv435wjul4zftv4yuxs0ayagfpw0taq37egram3qaap6q2ag2w7
+[1;36mPayment Key[0m         : ed25519e_sk15qpedlqhwxhkctvpvn4s9fxfmscwy3mh9mkssrnwx5wfqw02t3d5wh6stwklnxr9jqfqlakl2s2z6p2lnz5xknvu62zt62zjjafs6yshefmh3
+[1;36mStaking Key[0m         : ed25519e_sk16rff3sgxldm9ksxsefe75p04wvaazz9ymr5m6s4e5crvz0h2t3dnyzn66zqtgv32q47qkuhvf5jhcf3jx05whnq3657mjey3ffw7hpch9pd4h
+[1;36mUtxo[0m                : c408f9103ba7e0f207e211b53f5cca42f79f3e9c9d24024731d648be909497a8#0 - 10000 Ada
+
+[1;36mAddress #15[0m         : addr_test1qq5tscksq8n2vjszkdtqe0zn9645246ex3mu88x9y0stnlzjwyqgnrq3uuc3jst3hyy244rrwuxke0m7ezr3cn93u5vq0rfv8t
+[1;36mDerivation Path[0m     : m/1852'/1815'/15'/0/0
+[1;36mStake Address[0m       : stake_test1upf8zqyf3sg7wvgeg9cmjz92633hwrtvhalv3pcufjc72xqgl8gja
+[1;36mPayment Key[0m         : ed25519e_sk14z9et30gwx7d0c24yrpklheh905936ez66p5rf27pux7sw02t3dsa7yqzf7xcqyvrlp5v4k0x4rldgrxuzjaucu0c6gjt0dynx8sukgcffxnv
+[1;36mStaking Key[0m         : ed25519e_sk1fref9jndwaw6tn2xlc4nlwkl824auga85svj5v5m60g3yw82t3d7syehntq9h9wna4pwr5g53khjehpaklqh7zcxauuyu2tw0vwmkqca9v3q0
+[1;36mUtxo[0m                : 6712b9e13e7e433397ea2888899b8a5ba57b12c427dc72f1c1c684ac05f32b1a#0 - 10000 Ada
+
+[1;36mAddress #16[0m         : addr_test1qp0qu4cypvrwn4c7pu50zf3x9qu2drdsk545l5dnsa7a5gsr6htafuvutm36rm23hdnsw7w7r82q4tljuh55drxqt30q6vm8vs
+[1;36mDerivation Path[0m     : m/1852'/1815'/16'/0/0
+[1;36mStake Address[0m       : stake_test1uqpat4757xw9acapa4gmkec8080pn4q24lewt62x3nq9chs2k9etm
+[1;36mPayment Key[0m         : ed25519e_sk13qpmqegclg7ft2ce5l89jq2wjg48rg7n3gup9shyy3p22w82t3dujk49l4843nmk2para5s372l8vmzfkxmku3egr5vgtalfjm3hzwqnjamxh
+[1;36mStaking Key[0m         : ed25519e_sk14rkdqavts4pgg8mcweewrknu37eflyc32q93spy5k5m4zd02t3dcp4vsyv7jlx63e7hpr0zyz3z9tvrzqu2d9jwk4akedvyyy9taqrswkejyv
+[1;36mUtxo[0m                : 1c2498914a63269e7d4ab7f6b7d493d0d41a87b0cacaab7412c591219dcc21c4#0 - 10000 Ada
+
+[1;36mAddress #17[0m         : addr_test1qqm87edtdxc7vu2u34dpf9jzzny4qhk3wqezv6ejpx3vgrwt46dz4zq7vqll88fkaxrm4nac0m5cq50jytzlu0hax5xqwlraql
+[1;36mDerivation Path[0m     : m/1852'/1815'/17'/0/0
+[1;36mStake Address[0m       : stake_test1ur96ax323q0xq0lnn5mwnpa6e7u8a6vq28ez93078m7n2rq9emzd3
+[1;36mPayment Key[0m         : ed25519e_sk15qzuqn38va38m5sx3lj0wyqsstgtuwalmldqf20xu3e97sh2t3d6yhpz4tk44r026c60tluvfv4qkh8ccjw228zd5l6a9qccefrx34qldjfh9
+[1;36mStaking Key[0m         : ed25519e_sk1ep4szn8m6xyajgr4vf2uayulh4yq3f4nqqueep7y9pfvjd82t3d6573yf23hcgkx2aq3u9uuehl97d7leq8n3d2zd7gsfdf87c7fpzsj9m0sk
+[1;36mUtxo[0m                : 8b96680725c4fcf461214054d0b364a86e43d7d6be0475d610e980971b101ad0#0 - 10000 Ada
+
+[1;36mAddress #18[0m         : addr_test1qrzufj3g0ua489yt235wtc3mrjrlucww2tqdnt7kt5rs09grsag6vxw5v053atks5a6whke03cf2qx3h3g2nhsmzwv3sgml3ed
+[1;36mDerivation Path[0m     : m/1852'/1815'/18'/0/0
+[1;36mStake Address[0m       : stake_test1uqpcw5dxr82x86g74mg2wa8tmvhcuy4qrgmc59fmcd38xgcmfuasu
+[1;36mPayment Key[0m         : ed25519e_sk1ppu7cwx5vd8he3eck6e796t3ucnpqe4z8672x6h32khrjsh2t3dnq2f6qvyp3p3gtmgchw0jdseu57296pdlre3mql98vcgdy50hxsgfn77s3
+[1;36mStaking Key[0m         : ed25519e_sk14q9d4kyagaa5glcj938xhsdhhrze2747dmjfupww4833yw82t3d5ek5emhyn7vn4qumdqzkqleqma3q4lks4mfhfqfnww8szm9u2wfs7v99es
+[1;36mUtxo[0m                : c7565416e7553cdf8fdac8bf054b4b3de19d06b72efd00c47823335d7156ed1f#0 - 10000 Ada
+
+[1;36mAddress #19[0m         : addr_test1qrh3nrahcd0pj6ps3g9htnlw2jjxuylgdhfn2s5rxqyrr43yzewr2766qsfeq6stl65t546cwvclpqm2rpkkxtksgxuq90xn5f
+[1;36mDerivation Path[0m     : m/1852'/1815'/19'/0/0
+[1;36mStake Address[0m       : stake_test1uqjpvhp40ddqgyusdg9la2962av8xv0ssd4psmtr9mgyrwq9gaf6k
+[1;36mPayment Key[0m         : ed25519e_sk1ercgylcdszp5zt8ehufuyfujwtgc28737avv0dy0fqzexd02t3dsazn9xegp7qacxplnjlwhgnnwjv9z4y2yr0yp8qc4xp9n7zdq6hql493xp
+[1;36mStaking Key[0m         : ed25519e_sk13p8jen4fuqfvagsvpjs770am2ytrn072pvh7wyvdvrw6kvh2t3dad98mxt2savj4sgfe6gzmcwewt7649waymclrnts0ddy03ke3vkc9m9gut
+[1;36mUtxo[0m                : a6ce90a9a5ef8ef73858effdae375ba50f302d3c6c8b587a15eaa8fa98ddf741#0 - 10000 Ada
+
+Waiting for next block...
+[0;34m✅ [0mStarted ogmios : http://localhost:1337
+[0;34m✅ [0mYaci store starting ...
+Waiting for Yaci Store to start ...
+Waiting for Yaci Store to start ...
+[0;93m[💡 OK] [0mYaci Store Started
+Waiting for Yaci Store to start ...
+[0;93m[💡 Txn Cbor] [0m84a400d9010281825820347e9d3c72ddc52bdb43cf1c44d31507983c102e870398b9205fb8ed125f7e6400018282583900c09ccf29df2f53a4b10bf6f2f7ee78f7a5a41eb27c92d168917fe29fb6f4c967251d308a5a9b55c4bf0957a6cf315d3094ffb8b829f09fd11a0098968082581d60a0f1aa7dca95017c11e7e373aebcf0c4568cf47ec12b94f8eb5bba8b1b000aa87bedb8535f021a0002962107582024ff08a7f728937e5d01cc55619870ba457d17c94659637acabc5584f9dc440da100d90102818258209b0ee7e26318d3675742c8b841b981ae57c37bcbb2cc5625f80606b3256d0814584059b4346104f637119a9d68982810ea751c98f3c89c059176a8ed955844c20d4280a7be74888f0fc7b3c089b3b7b7a0cdc0afc64f7cca7feaaf786cbc593abd09f5a11902a2a1636d7367816a546f7075702046756e64
+[0;34m✅ [0mTransaction submitted successfully
+Waiting for tx to be included in block...
+Waiting for tx to be included in block...
+[0;93m[💡 Txn# : ] [0m88c2c4d2f8257858680aaeeaab11d7e98c474988522f2e21318b9e401671c593
+[0;93m[💡 Txn Cbor] [0m84a400d901028182582088c2c4d2f8257858680aaeeaab11d7e98c474988522f2e21318b9e401671c59301018282583900c09ccf29df2f53a4b10bf6f2f7ee78f7a5a41eb27c92d168917fe29fb6f4c967251d308a5a9b55c4bf0957a6cf315d3094ffb8b829f09fd11b00000002540be40082581d60a0f1aa7dca95017c11e7e373aebcf0c4568cf47ec12b94f8eb5bba8b1b000aa87999a9d88e021a000296d107582024ff08a7f728937e5d01cc55619870ba457d17c94659637acabc5584f9dc440da100d90102818258209b0ee7e26318d3675742c8b841b981ae57c37bcbb2cc5625f80606b3256d08145840ae604d705d6601a41b24717c91960946670d71c5d9855b1dfb2cda41f05db3827a299b32934ae76e471f2b0bfa84e4988233bf2eacedd939aed7992ea976a701f5a11902a2a1636d7367816a546f7075702046756e64
+[0;34m✅ [0mTransaction submitted successfully
+Waiting for tx to be included in block...
+Waiting for tx to be included in block...
+[0;93m[💡 Txn# : ] [0m590a38ebed84206f8019ea44e44b14e036c2023b4adb78820eaad2ca9ab5a92b
+[0;93m[💡 Txn Cbor] [0m84a400d9010281825820590a38ebed84206f8019ea44e44b14e036c2023b4adb78820eaad2ca9ab5a92b0101828258390078b499c2cc4ecec3aebb7a744f5b366b38dbeb0a6abbc195511b456f005ce04211e28bd381b8b5670b2bdc5463817dd24f8569abd428282b1a0098968082581d60a0f1aa7dca95017c11e7e373aebcf0c4568cf47ec12b94f8eb5bba8b1b000aa879990eabed021a0002962107582024ff08a7f728937e5d01cc55619870ba457d17c94659637acabc5584f9dc440da100d90102818258209b0ee7e26318d3675742c8b841b981ae57c37bcbb2cc5625f80606b3256d0814584043e57cb8d855dae89dfb7d25d6cc7beba7f254471fb195b3cba2b888744072b564072c6829b515fd863bcf698704e434805bf8453d9c852f3a27821526a16c02f5a11902a2a1636d7367816a546f7075702046756e64
+[0;34m✅ [0mTransaction submitted successfully
+Waiting for tx to be included in block...
+Waiting for tx to be included in block...
+[0;93m[💡 Txn# : ] [0mea251a4b3b99a5c320bf176af1bfcc7939d55c0607ac9548f7c36d26ba4950c6
+[0;93m[💡 Txn Cbor] [0m84a400d9010281825820ea251a4b3b99a5c320bf176af1bfcc7939d55c0607ac9548f7c36d26ba4950c60101828258390078b499c2cc4ecec3aebb7a744f5b366b38dbeb0a6abbc195511b456f005ce04211e28bd381b8b5670b2bdc5463817dd24f8569abd428282b1b00000002540be40082581d60a0f1aa7dca95017c11e7e373aebcf0c4568cf47ec12b94f8eb5bba8b1b000aa8774500311c021a000296d107582024ff08a7f728937e5d01cc55619870ba457d17c94659637acabc5584f9dc440da100d90102818258209b0ee7e26318d3675742c8b841b981ae57c37bcbb2cc5625f80606b3256d08145840dbc7a480a79da8e2d411cc9ca83ea5f6ffe7245e13ed1eb820ee0a6e6ca84b14bd24a8dd5860fd025c8a471636e1048d2a70f2484bc05bccb12198268ccc0e02f5a11902a2a1636d7367816a546f7075702046756e64
+[0;34m✅ [0mTransaction submitted successfully
+Waiting for tx to be included in block...
+Waiting for tx to be included in block...
+[0;93m[💡 Txn# : ] [0m2aeaabc7b9fac19f5941ff8052801c82739cca364132f4ee26c321d51c4dacf9

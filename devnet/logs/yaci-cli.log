@@ -1,0 +1,2 @@
+2026-07-14 17:00:59,096 [           main] WARN  org.jline                                - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
+2026-07-14 17:02:29,708 [           main] WARN  org.jline                                - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
