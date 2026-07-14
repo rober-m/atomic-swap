@@ -1,10 +1,20 @@
 import { existsSync } from "node:fs";
 
 import { config as loadDotenv } from "dotenv";
-import { MeshWallet, YaciProvider } from "@meshsdk/core";
+import { mConStr0, mOutputReference } from "@meshsdk/common";
+import {
+  DEFAULT_V1_COST_MODEL_LIST,
+  DEFAULT_V2_COST_MODEL_LIST,
+  DEFAULT_V3_COST_MODEL_LIST,
+  MeshTxBuilder,
+  MeshWallet,
+  pubKeyAddress,
+  serializeAddressObj,
+  YaciProvider,
+} from "@meshsdk/core";
 import { describe, expect, it } from "vitest";
 
-import { hasBundledBlueprint, SwapContract } from "./contract.js";
+import { hasBundledBlueprint, LANGUAGE_VERSION, SwapContract } from "./contract.js";
 
 // End-to-end integration test: a full lock→accept round-trip between two parties
 // against a real local devnet (Yaci DevKit). Person A locks assets asking a
@@ -135,4 +145,104 @@ async function fundedWallet(provider: YaciProvider): Promise<MeshWallet> {
     await confirmed(provider, acceptTx);
     expect(acceptTx).toMatch(/^[0-9a-f]{64}$/);
   }, 240_000);
+
+  it("rejects double satisfaction: two swaps taken with a single payment", async () => {
+    const provider = new YaciProvider(indexerUrl, adminUrl);
+
+    const walletA = await fundedWallet(provider);
+    const walletB = await fundedWallet(provider);
+
+    const contractA = new SwapContract({
+      fetcher: provider,
+      submitter: provider,
+      wallet: walletA,
+      networkId: 0,
+    });
+    const contractB = new SwapContract({
+      fetcher: provider,
+      submitter: provider,
+      wallet: walletB,
+      networkId: 0,
+    });
+
+    // A opens TWO independent swaps, each locking 5 ADA and asking 3 ADA.
+    const lock1 = await contractA.signAndSubmit(
+      await contractA.lock(
+        [{ unit: "lovelace", quantity: "5000000" }],
+        [{ unit: "lovelace", quantity: "3000000" }],
+      ),
+    );
+    await confirmed(provider, lock1);
+    const lock2 = await contractA.signAndSubmit(
+      await contractA.lock(
+        [{ unit: "lovelace", quantity: "5000000" }],
+        [{ unit: "lovelace", quantity: "3000000" }],
+      ),
+    );
+    await confirmed(provider, lock2);
+
+    const s1 = await contractA.getSwapUtxo(lock1);
+    const s2 = await contractA.getSwapUtxo(lock2);
+    expect(s1, "lock1 should produce a swap UTxO").toBeDefined();
+    expect(s2, "lock2 should produce a swap UTxO").toBeDefined();
+
+    // B attempts the attack: spend BOTH swap UTxOs in one transaction while
+    // paying A only ONCE (3 ADA), marked for the first swap only. If it went
+    // through, B would walk away with both 5 ADA bundles for a single 3 ADA
+    // payment. The second swap's validator finds no output marked with its own
+    // output reference, so the transaction must be rejected on chain.
+    const { swapScript } = contractB.getScripts();
+    const { owner } = contractB.readTerms(s1!);
+    const ownerAddress = serializeAddressObj(pubKeyAddress(owner), 0);
+    const markForS1 = mOutputReference(s1!.input.txHash, s1!.input.outputIndex);
+
+    const utxos = await walletB.getUtxos();
+    const collateral = (await walletB.getCollateral())[0];
+    const walletAddress = await walletB.getChangeAddress();
+
+    const buildAndSubmit = async () => {
+      const builder = new MeshTxBuilder({
+        fetcher: provider,
+        submitter: provider,
+        evaluator: provider,
+      });
+      builder.setNetwork([
+        DEFAULT_V1_COST_MODEL_LIST,
+        DEFAULT_V2_COST_MODEL_LIST,
+        DEFAULT_V3_COST_MODEL_LIST,
+      ]);
+      const unsigned = await builder
+        .spendingPlutusScript(LANGUAGE_VERSION)
+        .txIn(s1!.input.txHash, s1!.input.outputIndex, s1!.output.amount, s1!.output.address)
+        .spendingReferenceTxInInlineDatumPresent()
+        .spendingReferenceTxInRedeemerValue(mConStr0([]))
+        .txInScript(swapScript)
+        .spendingPlutusScript(LANGUAGE_VERSION)
+        .txIn(s2!.input.txHash, s2!.input.outputIndex, s2!.output.amount, s2!.output.address)
+        .spendingReferenceTxInInlineDatumPresent()
+        .spendingReferenceTxInRedeemerValue(mConStr0([]))
+        .txInScript(swapScript)
+        // A single 3 ADA payment to A, marked for the FIRST swap only.
+        .txOut(ownerAddress, [{ unit: "lovelace", quantity: "3000000" }])
+        .txOutInlineDatumValue(markForS1)
+        .changeAddress(walletAddress)
+        .txInCollateral(
+          collateral.input.txHash,
+          collateral.input.outputIndex,
+          collateral.output.amount,
+          collateral.output.address,
+        )
+        .selectUtxosFrom(utxos)
+        .complete();
+      const signed = await walletB.signTx(unsigned);
+      return provider.submitTx(signed);
+    };
+
+    // The attack must fail — either at script evaluation (build) or on submit.
+    await expect(buildAndSubmit()).rejects.toThrow();
+
+    // And the swaps are untouched: both UTxOs are still on chain, unspent.
+    expect(await contractA.getSwapUtxo(lock1)).toBeDefined();
+    expect(await contractA.getSwapUtxo(lock2)).toBeDefined();
+  }, 300_000);
 });

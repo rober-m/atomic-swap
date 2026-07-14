@@ -16,9 +16,6 @@ pub const test_owner: VerificationKeyHash =
 pub const other_owner: VerificationKeyHash =
   #"22222222222222222222222222222222222222222222222222222222"
 
-/// A sample unique swap tag used in tests.
-pub const test_tag = #"deadbeef"
-
 pub fn mock_output_reference(index: Int) -> OutputReference {
   OutputReference {
     transaction_id: #"0000000000000000000000000000000000000000000000000000000000000000",
@@ -51,16 +48,17 @@ pub fn mock_output(vkh: VerificationKeyHash, value: Value) -> Output {
   }
 }
 
-/// A payment output of `value` to `vkh`, carrying `tag` as its inline datum.
-pub fn mock_output_tagged(
+/// A payment output of `value` to `vkh`, carrying `mark` (a swap input's output
+/// reference) as its inline datum.
+pub fn mock_output_marked(
   vkh: VerificationKeyHash,
   value: Value,
-  tag: ByteArray,
+  mark: OutputReference,
 ) -> Output {
   Output {
     address: address.from_verification_key(vkh),
     value,
-    datum: InlineDatum(tag),
+    datum: InlineDatum(mark),
     reference_script: None,
   }
 }

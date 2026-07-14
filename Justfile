@@ -24,17 +24,24 @@ build-off-chain:
 test-off-chain:
     just -f off-chain/Justfile test
 
+# --- Devnet (Yaci) ---
+build-devnet:
+    just -f devnet/Justfile build
+
+test-devnet:
+    just -f devnet/Justfile test
+
 # --- Aggregate tasks ---
-build: build-on-chain build-off-chain
-    @echo '{{BOLD + GREEN}}✓ Build complete{{NORMAL}}'
+build: build-on-chain build-off-chain build-devnet
+    @echo '{{ BOLD + GREEN }}✓ Build complete{{ NORMAL }}'
 
 # Build the on-chain blueprint first (consumers read ../blueprint/plutus.json),
 # then run each component's tests in role order.
-test: build-on-chain test-on-chain test-off-chain
-    @echo '{{BOLD + BLACK + BG_GREEN}}  ✓  All tests passed  {{NORMAL}}'
+test: build-on-chain test-on-chain test-off-chain test-devnet
+    @echo '{{ BOLD + BLACK + BG_GREEN }}  ✓  All tests passed  {{ NORMAL }}'
 
 clean:
     just -f on-chain/Justfile clean
     just -f off-chain/Justfile clean
     rm -f blueprint/plutus.json
-    @echo '{{BOLD + GREEN}}✓ Clean complete{{NORMAL}}'
+    @echo '{{ BOLD + GREEN }}✓ Clean complete{{ NORMAL }}'

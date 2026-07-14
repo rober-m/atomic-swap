@@ -6,8 +6,8 @@ use cardano/transaction.{
   InlineDatum, Output, OutputReference, Transaction, placeholder,
 }
 use helpers.{
-  mock_output_reference, mock_output_tagged, other_owner, test_owner,
-  test_policy_id, test_tag, test_token_name,
+  mock_output, mock_output_marked, mock_output_reference, other_owner,
+  test_owner, test_policy_id, test_token_name,
 }
 
 // A simple atomic-swap spending validator.
@@ -21,6 +21,12 @@ use helpers.{
 //
 // A can also reclaim the locked assets at any time (a `Cancel`) by signing the
 // transaction, so funds are never stuck if no counterparty shows up.
+//
+// Double satisfaction is prevented by requiring the payment leg to carry THIS
+// input's own output reference (`own_ref`, the third argument to `spend`) as its
+// inline datum. Since every UTxO's output reference is globally unique, no single
+// output can settle two swaps at once, and A doesn't have to manage any nonce —
+// the ledger guarantees the uniqueness for free.
 
 /// A single asset the owner is asking for. Ada is represented with an empty
 /// policy id and empty asset name (see `assets.ada_policy_id`).
@@ -36,13 +42,6 @@ pub type SwapDatum {
   owner: VerificationKeyHash,
   /// The minimum assets that must be paid to `owner` to take the locked value.
   price: List<PricedAsset>,
-  /// A unique tag identifying this swap. The payment must carry this exact
-  /// tag as its inline datum, which binds the payment to this specific swap and
-  /// prevents one payment output from satisfying several swaps at once (the
-  /// "double satisfaction" attack). Person A must pick a value unique across
-  /// their live swaps. Deriving it from the seed UTxO's output reference (which
-  /// is globally unique) is the natural choice.
-  tag: ByteArray,
 }
 
 /// Spending redeemer: either swap (anyone pays the price) or cancel (owner
@@ -56,21 +55,21 @@ validator swap {
   spend(
     datum: Option<SwapDatum>,
     redeemer: SwapAction,
-    _own_ref: OutputReference,
+    own_ref: OutputReference,
     tx: Transaction,
   ) {
-    expect Some(SwapDatum { owner, price, tag }) = datum
+    expect Some(SwapDatum { owner, price }) = datum
     when redeemer is {
       // Anyone may consume the UTxO, but the transaction must contain EXACTLY
-      // ONE output carrying this swap's `tag` as its inline datum, and that
-      // single payment output must go to `owner` and cover the full `price`.
-      // Requiring exactly one tagged output both forces a single payment UTxO
-      // and prevents double satisfaction: a different swap carries a different
-      // tag, so one output can never settle two swaps.
+      // ONE output carrying THIS input's output reference as its inline datum,
+      // and that single payment output must go to `owner` and cover the full
+      // `price`. Requiring exactly one such output both forces a single payment
+      // UTxO and prevents double satisfaction: another swap input has a
+      // different output reference, so one output can never settle two swaps.
       Swap -> {
         expect [payment] = list.filter(
           tx.outputs,
-          fn(output) { output_tagged_with(output, tag) },
+          fn(output) { output_marked_with(output, own_ref) },
         )
         and {
           paid_to(payment, owner),
@@ -92,15 +91,12 @@ validator swap {
   }
 }
 
-/// True when `output` carries `tag` as its inline datum (a raw `ByteArray`).
-fn output_tagged_with(output: Output, tag: ByteArray) -> Bool {
+/// True when `output` carries `own_ref` as its inline datum, i.e. the payment is
+/// explicitly bound to the swap input being spent.
+fn output_marked_with(output: Output, own_ref: OutputReference) -> Bool {
+  let expected: Data = own_ref
   when output.datum is {
-    InlineDatum(inner) ->
-      if inner is bytes: ByteArray {
-        bytes == tag
-      } else {
-        False
-      }
+    InlineDatum(inner) -> inner == expected
     _ -> False
   }
 }
@@ -121,78 +117,138 @@ const price_10_ada: List<PricedAsset> =
   [PricedAsset { policy: "", name: "", quantity: 10_000_000 }]
 
 fn swap_datum(price: List<PricedAsset>) -> Option<SwapDatum> {
-  Some(SwapDatum { owner: test_owner, price, tag: test_tag })
+  Some(SwapDatum { owner: test_owner, price })
 }
 
-// A transaction whose only output pays `value` to `recipient`, tagged `tag`.
+// A transaction whose only output pays `value` to `recipient`, marked with the
+// swap input's output reference `mark`.
 fn tx_paying(
   recipient: VerificationKeyHash,
   value: Value,
-  tag: ByteArray,
+  mark: OutputReference,
 ) -> Transaction {
   Transaction {
     ..placeholder,
-    outputs: [mock_output_tagged(recipient, value, tag)],
+    outputs: [mock_output_marked(recipient, value, mark)],
   }
 }
 
 test success_swap_exact_payment() {
-  let tx = tx_paying(test_owner, from_lovelace(10_000_000), test_tag)
-  swap.spend(swap_datum(price_10_ada), Swap, mock_output_reference(0), tx)
+  let own = mock_output_reference(0)
+  let tx = tx_paying(test_owner, from_lovelace(10_000_000), own)
+  swap.spend(swap_datum(price_10_ada), Swap, own, tx)
 }
 
 test success_swap_overpayment() {
-  let tx = tx_paying(test_owner, from_lovelace(25_000_000), test_tag)
-  swap.spend(swap_datum(price_10_ada), Swap, mock_output_reference(0), tx)
+  let own = mock_output_reference(0)
+  let tx = tx_paying(test_owner, from_lovelace(25_000_000), own)
+  swap.spend(swap_datum(price_10_ada), Swap, own, tx)
 }
 
 test fail_swap_underpayment() fail {
-  let tx = tx_paying(test_owner, from_lovelace(9_999_999), test_tag)
-  swap.spend(swap_datum(price_10_ada), Swap, mock_output_reference(0), tx)
+  let own = mock_output_reference(0)
+  let tx = tx_paying(test_owner, from_lovelace(9_999_999), own)
+  swap.spend(swap_datum(price_10_ada), Swap, own, tx)
 }
 
 test fail_swap_pays_wrong_recipient() fail {
-  let tx = tx_paying(other_owner, from_lovelace(10_000_000), test_tag)
-  swap.spend(swap_datum(price_10_ada), Swap, mock_output_reference(0), tx)
+  let own = mock_output_reference(0)
+  let tx = tx_paying(other_owner, from_lovelace(10_000_000), own)
+  swap.spend(swap_datum(price_10_ada), Swap, own, tx)
 }
 
 test success_swap_for_a_token() {
   // Owner wants 5 units of a native token instead of ada.
+  let own = mock_output_reference(0)
   let price = [
     PricedAsset { policy: test_policy_id, name: test_token_name, quantity: 5 },
   ]
   let paid = from_lovelace(2_000_000) |> add(test_policy_id, test_token_name, 5)
-  let tx = tx_paying(test_owner, paid, test_tag)
-  swap.spend(swap_datum(price), Swap, mock_output_reference(0), tx)
+  let tx = tx_paying(test_owner, paid, own)
+  swap.spend(swap_datum(price), Swap, own, tx)
 }
 
-test fail_swap_untagged_payment() fail {
-  // A correct payment to the owner that carries NO tag doesn't count — the
-  // payment leg must be bound to this swap.
+test fail_swap_unmarked_payment() fail {
+  // A correct payment to the owner that carries NO datum doesn't count — the
+  // payment leg must be bound to this swap input's output reference.
+  let own = mock_output_reference(0)
   let tx = Transaction {
     ..placeholder,
-    outputs: [mock_output_tagged(test_owner, from_lovelace(10_000_000), "")],
+    outputs: [mock_output(test_owner, from_lovelace(10_000_000))],
   }
-  swap.spend(swap_datum(price_10_ada), Swap, mock_output_reference(0), tx)
+  swap.spend(swap_datum(price_10_ada), Swap, own, tx)
 }
 
-test fail_swap_payment_tagged_for_another_swap() fail {
-  // The double-satisfaction guard: a payment tagged for a DIFFERENT swap
-  // cannot settle this one, even though it pays the owner enough.
-  let tx = tx_paying(test_owner, from_lovelace(10_000_000), #"cafe")
-  swap.spend(swap_datum(price_10_ada), Swap, mock_output_reference(0), tx)
+test fail_swap_payment_marked_for_another_input() fail {
+  // The double-satisfaction guard: a payment marked with a DIFFERENT input's
+  // reference cannot settle this one, even though it pays the owner enough.
+  let own = mock_output_reference(0)
+  let tx = tx_paying(
+    test_owner,
+    from_lovelace(10_000_000),
+    mock_output_reference(1),
+  )
+  swap.spend(swap_datum(price_10_ada), Swap, own, tx)
 }
 
-test fail_swap_split_across_two_tagged_outputs() fail {
-  // Splitting the payment is rejected: exactly one tagged output is required.
+test fail_swap_split_across_two_marked_outputs() fail {
+  // Splitting the payment is rejected: exactly one marked output is required.
+  let own = mock_output_reference(0)
   let tx = Transaction {
     ..placeholder,
     outputs: [
-      mock_output_tagged(test_owner, from_lovelace(6_000_000), test_tag),
-      mock_output_tagged(test_owner, from_lovelace(4_000_000), test_tag),
+      mock_output_marked(test_owner, from_lovelace(6_000_000), own),
+      mock_output_marked(test_owner, from_lovelace(4_000_000), own),
     ],
   }
-  swap.spend(swap_datum(price_10_ada), Swap, mock_output_reference(0), tx)
+  swap.spend(swap_datum(price_10_ada), Swap, own, tx)
+}
+
+// Double satisfaction: two swaps to the SAME owner, each asking 10 ADA, are
+// spent in ONE transaction that pays the owner only once. Each swap input has a
+// distinct output reference, and the single payment can be marked with only one
+// of them — so at most one swap's validator can find its payment. The other
+// fails, which fails the whole transaction. The attacker cannot take both
+// bundles for one payment.
+//
+// A spend validator runs once per script input, so we model the attack as the
+// two separate runs the ledger would perform over the shared transaction.
+
+// The shared transaction: a single payment of 10 ADA to the owner, marked for
+// the FIRST swap input (ref 0) only.
+fn double_satisfaction_tx() -> Transaction {
+  Transaction {
+    ..placeholder,
+    outputs: [
+      mock_output_marked(
+        test_owner,
+        from_lovelace(10_000_000),
+        mock_output_reference(0),
+      ),
+    ],
+  }
+}
+
+test double_satisfaction_first_swap_ok() {
+  // The swap the single payment is marked for (ref 0) validates.
+  swap.spend(
+    swap_datum(price_10_ada),
+    Swap,
+    mock_output_reference(0),
+    double_satisfaction_tx(),
+  )
+}
+
+test fail_double_satisfaction_second_swap() fail {
+  // The other swap input (ref 1), sharing that same one-payment transaction, has
+  // no output marked for it → its validator fails, so the transaction cannot
+  // settle both swaps against a single payment.
+  swap.spend(
+    swap_datum(price_10_ada),
+    Swap,
+    mock_output_reference(1),
+    double_satisfaction_tx(),
+  )
 }
 
 test success_cancel_by_owner() {
